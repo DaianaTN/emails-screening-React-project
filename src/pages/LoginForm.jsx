@@ -19,6 +19,7 @@ export const LoginForm = ({ users, setLoggedInUserId }) => {
       console.log("User already logged in");
       return;
     }
+
     setUserStatus(selectedUser, "active");
     setLoggedInUserId(selectedUser);
     navigate("/leads");
@@ -28,18 +29,26 @@ export const LoginForm = ({ users, setLoggedInUserId }) => {
     <div className={`${styles.loginForm}`}>
       <div>
         <form>
-          <label className="p-3">Select your username</label>
-          <select onChange={handleChange}>
-            <option value={undefined}>Select a user</option>
-            {users.map((user, index) => (
-              <option key={index} value={index}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-          <button type="button" onClick={handleClickLogin}>
-            Login
-          </button>
+          <div className={`${styles.contentWrapperLogin}`}>
+            <label className="p-3 text-center">
+              Please select your username
+            </label>
+            <select onChange={handleChange}>
+              <option value={undefined}>Select a user</option>
+              {users.map((user, index) => (
+                <option key={index} value={index}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+            <button
+              type="button"
+              onClick={handleClickLogin}
+              disabled={!selectedUser}
+            >
+              Login
+            </button>
+          </div>
         </form>
       </div>
     </div>

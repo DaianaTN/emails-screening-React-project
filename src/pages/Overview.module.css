@@ -19,3 +19,8 @@ nav button {
 main section {
   color: #818793;
 }
+
+.emailWrapper {
+  background-color: #04142d;
+  padding: 2rem;
+}

@@ -1,6 +1,6 @@
 /* Global variables */
 :root {
-  --text-primary: #ffffff;
+  --text-primary: #ffffffc7;
   --text-secondary: #818793;
 
   --bg-primary: #243546;
@@ -69,10 +69,13 @@ a {
 button {
   border: 1px solid;
   border-radius: 25px;
+  box-shadow: 1px 1px black;
+  text-shadow: 0.5px 0px black !important;
 }
 
 h1,
 h2,
 h3 {
   font-weight: bold;
+  text-shadow: 0.5px 0.5px black !important;
 }

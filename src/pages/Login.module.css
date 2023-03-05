@@ -11,10 +11,32 @@
 }
 
 button {
-  margin: 1rem;
+  margin: 2rem 5rem !important;
   background-color: #feab00;
   color: black;
   border: 1px solid;
   border-radius: 25px;
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 1.2rem;
+  text-shadow: 0.5px 0px;
+  box-shadow: 1px 1px black;
+}
+
+select {
+  color: black;
+  background-color: #818793;
+  border: 2px solid #0e53dd;
+  border-radius: 25px;
+  text-shadow: 0.3px 0px;
+  box-shadow: 1px 1px black;
+  text-align: center;
+  margin-top: 1.5rem !important;
+  padding: 0.3rem;
+}
+
+.contentWrapperLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100px;
+  width: 300px;
 }

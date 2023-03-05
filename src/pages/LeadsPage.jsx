@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchNextEmail } from "../components/FetchNextEmail";
+import { setEmailProcessedByUser } from "../components/setEmailProcessedByUser";
 import styles from "./LeadsPage.module.css";
 
 export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
@@ -25,20 +26,25 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
     return () => clearInterval(interval);
   }, [seconds]);
 
+  setEmailProcessedByUser(emails, user);
+
   //select option function for lead screening
   const selectOption = option => {
     if (option === 1) {
       let retrievedString = localStorage.getItem("emails");
       let parsedObject = JSON.parse(retrievedString);
       parsedObject[emailIndex].status = "positive";
+      parsedObject[emailIndex].byUser = user.name;
       let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
       localStorage.setItem("emails", modifiedndstrigifiedForStorage);
+
       setSeconds(120);
       fetchNextEmail(emailIndex, setEmailIndex, emails);
     } else if (option === 2) {
       let retrievedString = localStorage.getItem("emails");
       let parsedObject = JSON.parse(retrievedString);
       parsedObject[emailIndex].status = "neutral";
+      parsedObject[emailIndex].byUser = loggedInUserId;
       let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
       localStorage.setItem("emails", modifiedndstrigifiedForStorage);
       fetchNextEmail(emailIndex, setEmailIndex, emails);
@@ -47,6 +53,7 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
       let retrievedString = localStorage.getItem("emails");
       let parsedObject = JSON.parse(retrievedString);
       parsedObject[emailIndex].status = "not a lead";
+      parsedObject[emailIndex].byUser = loggedInUserId;
       let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
       localStorage.setItem("emails", modifiedndstrigifiedForStorage);
       fetchNextEmail(emailIndex, setEmailIndex, emails);
@@ -57,8 +64,6 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
   return (
     <div className={`${styles.LeadsPage}`}>
       <nav>
-        <h1>Welcome back, {user.name}</h1>
-
         {/* nav to overview page */}
         <button
           type="button"
@@ -73,6 +78,8 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
         <button type="button" onClick={logout}>
           Logout
         </button>
+
+        <h1>Welcome back, {user.name}</h1>
       </nav>
       <main>
         {/* countdown */}

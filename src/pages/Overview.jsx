@@ -49,8 +49,8 @@ export const Overview = () => {
         {emails
           .filter(email => email.status !== "pending")
           .map(email => (
-            <div>
-              <p className="mt-5">
+            <div className={`${styles.emailWrapper}`}>
+              <p>
                 <strong>Subject line: </strong>
                 {email.subject}
               </p>
@@ -60,6 +60,9 @@ export const Overview = () => {
               <p>
                 <strong>Status: </strong> {email.status}
               </p>
+              {/* <p>
+                <strong>Processed by {email.byUser}</strong>
+              </p> */}
             </div>
           ))}
       </main>

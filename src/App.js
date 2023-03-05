@@ -63,8 +63,6 @@ const App = () => {
 
         {/* 404 Page */}
         <Route path="*" element={<Page404 />} />
-
-        {/* <Route path="/leads/:emailId" element={<Emails />} /> */}
       </Routes>
     </div>
   );

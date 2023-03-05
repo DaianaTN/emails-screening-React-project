@@ -1,30 +1,40 @@
 .LeadsPage {
   text-align: center;
   color: var(--text-primary);
+  margin-bottom: 10rem;
 }
 
 .LeadsPage h1 {
   color: #818793;
-  margin-top: 3rem;
 }
 
 nav button {
   background-color: #0e53dd;
   color: #ffff;
-  margin: 0.5rem;
-  margin-bottom: 5rem;
+  margin: 0.5rem !important;
+  margin: 3rem 1rem !important;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+nav button:hover {
+  color: #ffffffc7;
 }
 
 .LeadsPageEmails {
   /* text-align: left; */
   color: white;
-  margin: 2rem;
+  margin: 3rem;
 }
 
 main button {
-  margin: 5px;
+  margin: 3px !important;
 }
 
 form button {
   text-align: center !important;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+form button:hover {
+  color: #0e53dd;
 }
