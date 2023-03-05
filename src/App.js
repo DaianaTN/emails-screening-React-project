@@ -6,6 +6,7 @@ import { LoginForm } from "./pages/LoginForm";
 import { LeadsPage } from "./pages/LeadsPage";
 import userData from "./data/users.json";
 import { setUserStatus } from "./utils/setUserStatus";
+import emailsData from "./data/leads.json";
 
 const App = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const App = () => {
     }
   }, []);
 
+  //logout button function
   const logout = () => {
     setUserStatus(loggedInUserId, "inactive");
     setLoggedInUserId(undefined);
@@ -34,6 +36,7 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
+        {/* Login page */}
         <Route
           path="/"
           element={
@@ -41,6 +44,7 @@ const App = () => {
           }
         />
 
+        {/* Emails screening page */}
         <Route
           path="/leads"
           element={
@@ -48,10 +52,12 @@ const App = () => {
               users={users}
               loggedInUserId={loggedInUserId}
               logout={logout}
+              emails={emailsData}
             />
           }
         />
 
+        {/* 404 Page */}
         <Route path="*" element={<Page404 />} />
 
         {/* <Route path="/leads/:emailId" element={<Emails />} /> */}

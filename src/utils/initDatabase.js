@@ -2,6 +2,7 @@ import userData from "../data/users.json";
 import emailData from "../data/leads.json";
 
 export const initDatabase = () => {
+  // login users database
   if (localStorage.getItem("users")) {
     console.log(
       "we already have users!",
@@ -12,6 +13,7 @@ export const initDatabase = () => {
     localStorage.setItem("users", JSON.stringify(userData));
   }
 
+  // emails database
   if (localStorage.getItem("emails")) {
     console.log(
       "we already have emails!",

@@ -7,10 +7,12 @@ export const LoginForm = ({ users, setLoggedInUserId }) => {
   const [selectedUser, setSelectedUser] = useState();
   const navigate = useNavigate();
 
+  //store the selected user in the state
   const handleChange = event => {
     setSelectedUser(event.target.value);
   };
 
+  //find out the selected user status and act accordingly
   const handleClickLogin = () => {
     const selectedUserStatus = getUserStatus(selectedUser);
     if (selectedUserStatus === "active") {
@@ -23,7 +25,7 @@ export const LoginForm = ({ users, setLoggedInUserId }) => {
   };
 
   return (
-    <div className="login">
+    <div>
       <form>
         <label>Select a user</label>
         <select onChange={handleChange}>
