@@ -1,18 +1,26 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import Countdown from "../components/Countdown";
+
+import { fetchNextEmail } from "../components/FetchNextEmail";
 
 export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
   const user = users[loggedInUserId] || { name: "" };
   const navigate = useNavigate();
   const [emailIndex, setEmailIndex] = useState(0);
+  const [seconds, setSeconds] = useState(120);
 
-  const fetchNextEmail = () => {
-    const nextIndex = emailIndex + 1;
-    if (nextIndex < emails.length) {
-      setEmailIndex(nextIndex);
+  //countdown
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds(seconds - 1);
+    }, 1000);
+    if (seconds === 0) {
+      alert("Session expired");
+      fetchNextEmail(emailIndex, setEmailIndex, emails);
+      setSeconds(120);
     }
-  };
+    return () => clearInterval(interval);
+  }, [seconds]);
 
   //select option function
   const selectOption = option => {
@@ -22,30 +30,26 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
       parsedObject[emailIndex].status = "positive";
       let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
       localStorage.setItem("emails", modifiedndstrigifiedForStorage);
-
-      // setEmail(parsedObject);
-      fetchNextEmail();
+      setSeconds(120);
+      fetchNextEmail(emailIndex, setEmailIndex, emails);
     } else if (option === 2) {
       let retrievedString = localStorage.getItem("emails");
       let parsedObject = JSON.parse(retrievedString);
       parsedObject[emailIndex].status = "neutral";
       let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
       localStorage.setItem("emails", modifiedndstrigifiedForStorage);
-      // setEmail(parsedObject);
-      fetchNextEmail();
+      fetchNextEmail(emailIndex, setEmailIndex, emails);
+      setSeconds(120);
     } else {
       let retrievedString = localStorage.getItem("emails");
       let parsedObject = JSON.parse(retrievedString);
       parsedObject[emailIndex].status = "not a lead";
       let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
       localStorage.setItem("emails", modifiedndstrigifiedForStorage);
-      // setEmail(parsedObject);
-      fetchNextEmail();
+      fetchNextEmail(emailIndex, setEmailIndex, emails);
+      setSeconds(120);
     }
   };
-
-  console.log(emails);
-  console.log(emailIndex);
 
   return (
     <>
@@ -66,8 +70,8 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
         Logout
       </button>
 
-      {/* timer
-      <div>Time Left: {Countdown} seconds</div> */}
+      {/* countdown */}
+      <div>Time Left: {seconds} seconds</div>
 
       {/* Lead screening form */}
       <form>
@@ -90,6 +94,7 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
             </button>
           </div>
         </div>
+
         {/* email */}
         <div>
           <div className="mt-4">

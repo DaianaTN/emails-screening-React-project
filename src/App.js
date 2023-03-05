@@ -7,6 +7,7 @@ import { LeadsPage } from "./pages/LeadsPage";
 import userData from "./data/users.json";
 import { setUserStatus } from "./utils/setUserStatus";
 import emailsData from "./data/leads.json";
+import { Overview } from "./pages/Overview";
 
 const App = () => {
   const navigate = useNavigate();
@@ -56,6 +57,9 @@ const App = () => {
             />
           }
         />
+
+        {/* Overview page */}
+        <Route path="/overview" element={<Overview />} />
 
         {/* 404 Page */}
         <Route path="*" element={<Page404 />} />
