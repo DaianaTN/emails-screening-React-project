@@ -45,7 +45,7 @@ const App = () => {
           }
         />
 
-        {/* Emails screening page */}
+        {/* Leads page */}
         <Route
           path="/leads"
           element={

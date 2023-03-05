@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { initDatabase } from "../utils/initDatabase";
+import styles from "./Overview.module.css";
 
 export const Overview = () => {
   const navigate = useNavigate();
 
-  //buttons functions
+  //function for buttons
   const handleBackClick = () => {
     navigate("/leads");
   };
   const handleResetClick = () => {
     localStorage.clear();
     navigate("/");
+    initDatabase();
   };
 
-  //emails array
-
+  //emails array from localStorage
   const emails = JSON.parse(localStorage.getItem("emails"));
 
-  //replies
+  //types of replies
   const positiveRepliesNo = emails
     .filter(email => email.status === "positive")
     .map(email => email.email).length;
@@ -31,26 +33,36 @@ export const Overview = () => {
     .map(email => email.email).length;
 
   return (
-    <div>
-      <div>
+    <div className={`${styles.Overview}`}>
+      <nav>
         <button onClick={handleResetClick}>Reset App</button>
-        <h1>OVERVIEW</h1>
         <button onClick={handleBackClick}>Back</button>
-        <div>
+        <h1>OVERVIEW</h1>
+      </nav>
+      <main>
+        <section>
           <p>Positive replies: {positiveRepliesNo}</p>
           <p>Neutral replies: {neutralRepliesNo}</p>
           <p>Not a lead replies: {notALeadRepliesNo}</p>
-        </div>
-      </div>
-      {emails.map(email => (
-        <div>
-          <p className="mt-5">
-            Subject line: <strong>{email.subject}</strong>
-          </p>
-          <p>Body: {email.body}</p>
-          <p>Status: {email.status}</p>
-        </div>
-      ))}
+        </section>
+
+        {emails
+          .filter(email => email.status !== "pending")
+          .map(email => (
+            <div>
+              <p className="mt-5">
+                <strong>Subject line: </strong>
+                {email.subject}
+              </p>
+              <p>
+                <strong>Body: </strong> {email.body}
+              </p>
+              <p>
+                <strong>Status: </strong> {email.status}
+              </p>
+            </div>
+          ))}
+      </main>
     </div>
   );
 };

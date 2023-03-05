@@ -1,3 +1,20 @@
-.login {
+.loginForm {
   display: flex;
+  justify-content: center;
+  margin: 10rem 0;
+  color: var(--text-primary);
+}
+
+.loginWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  margin: 1rem;
+  background-color: #feab00;
+  color: black;
+  border: 1px solid;
+  border-radius: 25px;
+  padding: 0.3rem 1rem;
 }

@@ -1,0 +1,30 @@
+.LeadsPage {
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.LeadsPage h1 {
+  color: #818793;
+  margin-top: 3rem;
+}
+
+nav button {
+  background-color: #0e53dd;
+  color: #ffff;
+  margin: 0.5rem;
+  margin-bottom: 5rem;
+}
+
+.LeadsPageEmails {
+  /* text-align: left; */
+  color: white;
+  margin: 2rem;
+}
+
+main button {
+  margin: 5px;
+}
+
+form button {
+  text-align: center !important;
+}

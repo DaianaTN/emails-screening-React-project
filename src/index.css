@@ -1,16 +1,14 @@
-/* Adaugam variabile globale: */
+/* Global variables */
 :root {
-  --text-primary: #101d42;
-  --text-secondary: #fbb44c;
-  --text-dark: #2b2922;
-  --text-light: #eaeaea;
+  --text-primary: #ffffff;
+  --text-secondary: #818793;
 
-  --bg-primary: #141e4c;
-  --bg-secondary: #dfedf5;
-  --bg-dark: #101d42;
+  --bg-primary: #243546;
+  --bg-buttons: #feab00;
+  --bg-light: #0e53dd;
 }
 
-/* Resetam proprietati default: */
+/* Reset default properties */
 * {
   box-sizing: border-box;
 }
@@ -18,6 +16,7 @@
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
+  background-color: var(--bg-primary);
 }
 
 ul {
@@ -31,40 +30,45 @@ a {
   text-decoration: none;
 }
 
-/* Customizam Bootstrap: */
+/* Customize bootstrap */
 .btn-secondary,
 .btn-secondary:hover,
 .btn-secondary:focus {
-  background-color: #2bb686;
-  border-color: #2bb686;
+  background-color: #feab00;
+  border-color: #243546b4;
 }
 
 .text-primary {
-  color: #101d42 !important;
+  color: #ffffff !important;
 }
 
 .text-secondary {
-  color: #fbb44c !important;
+  color: #818793 !important;
 }
 
 .text-light {
-  color: #eaeaea !important;
+  color: #ffffff !important;
 }
 
 .text-dark {
-  color: #2b2922 !important;
+  color: #818793 !important;
 }
 
 .bg-primary {
-  background-color: #141e4c !important;
+  background-color: #243546 !important;
 }
 
 .bg-secondary {
-  background-color: #dfedf5 !important;
+  background-color: #0e53dd !important;
 }
 
 .bg-dark {
-  background-color: #101d42 !important;
+  background-color: #243546 !important;
+}
+
+button {
+  border: 1px solid;
+  border-radius: 25px;
 }
 
 h1,

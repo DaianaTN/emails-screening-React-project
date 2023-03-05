@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { fetchNextEmail } from "../components/FetchNextEmail";
+import styles from "./LeadsPage.module.css";
 
 export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
   const user = users[loggedInUserId] || { name: "" };
@@ -15,14 +15,17 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
       setSeconds(seconds - 1);
     }, 1000);
     if (seconds === 0) {
-      alert("Session expired");
+      alert(
+        `Session expired
+        Page will be refreshed because session has expired`
+      );
       fetchNextEmail(emailIndex, setEmailIndex, emails);
       setSeconds(120);
     }
     return () => clearInterval(interval);
   }, [seconds]);
 
-  //select option function
+  //select option function for lead screening
   const selectOption = option => {
     if (option === 1) {
       let retrievedString = localStorage.getItem("emails");
@@ -52,61 +55,64 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
   };
 
   return (
-    <>
-      <p>Welcome back, {user.name}</p>
+    <div className={`${styles.LeadsPage}`}>
+      <nav>
+        <h1>Welcome back, {user.name}</h1>
 
-      {/* nav to overview page */}
-      <button
-        type="button"
-        onClick={() => {
-          navigate("/overview");
-        }}
-      >
-        Overview
-      </button>
+        {/* nav to overview page */}
+        <button
+          type="button"
+          onClick={() => {
+            navigate("/overview");
+          }}
+        >
+          Overview
+        </button>
 
-      {/* logout button */}
-      <button type="button" onClick={logout}>
-        Logout
-      </button>
-
-      {/* countdown */}
-      <div>Time Left: {seconds} seconds</div>
-
-      {/* Lead screening form */}
-      <form>
-        {/* options */}
-        <label>Select an option</label>
-        <div>
-          <div>
-            <button type="button" onClick={() => selectOption(1)}>
-              Positive
-            </button>
-          </div>
-          <div>
-            <button type="button" onClick={() => selectOption(2)}>
-              Neutral
-            </button>
-          </div>
-          <div>
-            <button type="button" onClick={() => selectOption(3)}>
-              Not a Lead
-            </button>
-          </div>
+        {/* logout button */}
+        <button type="button" onClick={logout}>
+          Logout
+        </button>
+      </nav>
+      <main>
+        {/* countdown */}
+        <div className="countdown text-center">
+          Time Left: {seconds} seconds
         </div>
 
-        {/* email */}
-        <div>
-          <div className="mt-4">
-            {" "}
-            <strong>Subject line:</strong> {emails[emailIndex].subject}
+        {/* Lead screening form options */}
+        <form>
+          <div>
+            <div className="text-center">
+              <button type="button" onClick={() => selectOption(1)}>
+                Positive
+              </button>
+            </div>
+            <div className="text-center">
+              <button type="button" onClick={() => selectOption(2)}>
+                Neutral
+              </button>
+            </div>
+            <div className="text-center">
+              <button type="button" onClick={() => selectOption(3)}>
+                Not a Lead
+              </button>
+            </div>
           </div>
-          <div className="mt-1">
-            {" "}
-            <strong>Body:</strong> {emails[emailIndex].body}
+
+          {/* email representation on the page */}
+          <div className={`${styles.LeadsPageEmails}`}>
+            <div className="mt-4">
+              {" "}
+              <strong>Subject line:</strong> {emails[emailIndex].subject}
+            </div>
+            <div className="mt-1">
+              {" "}
+              <strong>Body:</strong> {emails[emailIndex].body}
+            </div>
           </div>
-        </div>
-      </form>
-    </>
+        </form>
+      </main>
+    </div>
   );
 };

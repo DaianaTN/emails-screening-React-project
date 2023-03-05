@@ -25,21 +25,23 @@ export const LoginForm = ({ users, setLoggedInUserId }) => {
   };
 
   return (
-    <div>
-      <form>
-        <label>Select a user</label>
-        <select onChange={handleChange}>
-          <option value={undefined}>Select a user</option>
-          {users.map((user, index) => (
-            <option key={index} value={index}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-        <button type="button" onClick={handleClickLogin}>
-          Login
-        </button>
-      </form>
+    <div className={`${styles.loginForm}`}>
+      <div>
+        <form>
+          <label className="p-3">Select your username</label>
+          <select onChange={handleChange}>
+            <option value={undefined}>Select a user</option>
+            {users.map((user, index) => (
+              <option key={index} value={index}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <button type="button" onClick={handleClickLogin}>
+            Login
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
