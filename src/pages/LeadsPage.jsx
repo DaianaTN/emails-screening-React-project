@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchNextEmail } from "../components/FetchNextEmail";
-import { setEmailProcessedByUser } from "../components/setEmailProcessedByUser";
 import styles from "./LeadsPage.module.css";
+import { getNextEmailIndex, updateEmailById } from "../api/emailsApi";
+
+const STATUS_RESPONSES = {
+  1: "positive",
+  2: "neutral",
+  3: "not a lead",
+};
 
 export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
   const user = users[loggedInUserId] || { name: "" };
   const navigate = useNavigate();
-  const [emailIndex, setEmailIndex] = useState(0);
+  const [emailIndex, setEmailIndex] = useState(null);
   const [seconds, setSeconds] = useState(120);
 
-  //countdown
+  const displayNextEmail = () => {
+    const nextIndex = getNextEmailIndex();
+    setEmailIndex(nextIndex);
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setSeconds(seconds - 1);
@@ -20,45 +29,19 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
         `Session expired
         Page will be refreshed because session has expired`
       );
-      fetchNextEmail(emailIndex, setEmailIndex, emails);
+      clearInterval(interval);
+      displayNextEmail();
       setSeconds(120);
     }
+    displayNextEmail();
     return () => clearInterval(interval);
   }, [seconds]);
 
-  setEmailProcessedByUser(emails, user);
-
   //select option function for lead screening
   const selectOption = option => {
-    if (option === 1) {
-      let retrievedString = localStorage.getItem("emails");
-      let parsedObject = JSON.parse(retrievedString);
-      parsedObject[emailIndex].status = "positive";
-      parsedObject[emailIndex].byUser = user.name;
-      let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
-      localStorage.setItem("emails", modifiedndstrigifiedForStorage);
-
+      updateEmailById(emailIndex, { status: STATUS_RESPONSES[option], byUser: user.name });
+      displayNextEmail();
       setSeconds(120);
-      fetchNextEmail(emailIndex, setEmailIndex, emails);
-    } else if (option === 2) {
-      let retrievedString = localStorage.getItem("emails");
-      let parsedObject = JSON.parse(retrievedString);
-      parsedObject[emailIndex].status = "neutral";
-      parsedObject[emailIndex].byUser = loggedInUserId;
-      let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
-      localStorage.setItem("emails", modifiedndstrigifiedForStorage);
-      fetchNextEmail(emailIndex, setEmailIndex, emails);
-      setSeconds(120);
-    } else {
-      let retrievedString = localStorage.getItem("emails");
-      let parsedObject = JSON.parse(retrievedString);
-      parsedObject[emailIndex].status = "not a lead";
-      parsedObject[emailIndex].byUser = loggedInUserId;
-      let modifiedndstrigifiedForStorage = JSON.stringify(parsedObject);
-      localStorage.setItem("emails", modifiedndstrigifiedForStorage);
-      fetchNextEmail(emailIndex, setEmailIndex, emails);
-      setSeconds(120);
-    }
   };
 
   return (
@@ -84,12 +67,12 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
       <main>
         {/* countdown */}
         <div className="countdown text-center">
-          Time Left: {seconds} seconds
+          Time Left: {emailIndex !== null ? `${seconds} seconds` : '-'}
         </div>
 
         {/* Lead screening form options */}
         <form>
-          <div>
+          <div style={{display: "flex", justifyContent: "center"}}>
             <div className="text-center">
               <button type="button" onClick={() => selectOption(1)}>
                 Positive
@@ -108,16 +91,18 @@ export const LeadsPage = ({ users, loggedInUserId, logout, emails }) => {
           </div>
 
           {/* email representation on the page */}
-          <div className={`${styles.LeadsPageEmails}`}>
-            <div className="mt-4">
-              {" "}
-              <strong>Subject line:</strong> {emails[emailIndex].subject}
-            </div>
-            <div className="mt-1">
-              {" "}
-              <strong>Body:</strong> {emails[emailIndex].body}
-            </div>
-          </div>
+          {emailIndex !== null ? (
+              <div className={`${styles.LeadsPageEmails}`}>
+                <div className="mt-4">
+                  {" "}
+                  <strong>Subject line:</strong> {emails[emailIndex].subject}
+                </div>
+                <div className="mt-1">
+                  {" "}
+                  <strong>Body:</strong> {emails[emailIndex].body}
+                </div>
+              </div>
+          ) : <h2>No emails to process!</h2>}
         </form>
       </main>
     </div>

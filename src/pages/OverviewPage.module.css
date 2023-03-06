@@ -1,0 +1,26 @@
+.Overview {
+  text-align: center;
+  color: white;
+}
+
+main div {
+  text-align: left !important;
+  margin: 2rem;
+}
+
+main div strong {
+  color: #818793;
+}
+
+nav button {
+  margin: 2rem 5rem;
+}
+
+main section {
+  color: #818793;
+}
+
+.emailWrapper {
+  background-color: #04142d;
+  padding: 2rem;
+}

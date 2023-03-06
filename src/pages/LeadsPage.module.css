@@ -24,6 +24,8 @@ nav button:hover {
   /* text-align: left; */
   color: white;
   margin: 3rem;
+  background-color: #04142d;
+  padding: 2rem;
 }
 
 main button {
